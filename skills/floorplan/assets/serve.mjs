@@ -152,7 +152,8 @@ const readFlows = () => { try { return JSON.parse(fs.readFileSync(flowsFile, 'ut
 // links its code). Your answer (joined, later,
 // never) is kept in ~/.floorplan/settings.json so every project's map remembers it.
 // FLOORPLAN_NO_PROMPTS=1 turns the question off.
-const WAITLIST_URL = process.env.FLOORPLAN_WAITLIST_URL || 'https://floorplan-waitlist-690500262396.us-central1.run.app/';
+// nivrigler fork: the waitlist is off for good, so the prompt never shows and nothing is ever sent.
+const WAITLIST_URL = '';
 const settingsFile = path.join(process.env.HOME || process.env.USERPROFILE || here, '.floorplan', 'settings.json');
 const readSettings = () => { try { return JSON.parse(fs.readFileSync(settingsFile, 'utf8')); } catch { return {}; } };
 function saveCloud(cloud) {
@@ -165,6 +166,7 @@ function cloudPrompt() {
 }
 /** The email of the claude.ai account Claude Code is signed in with, or null (API key, Bedrock, not signed in). */
 function claudeEmail() {
+  return null; // nivrigler fork: never read the account email
   if (engine !== 'claude') return null;
   try {
     const out = execFileSync(cli.cmd, [...cli.args, 'auth', 'status', '--json'], { encoding: 'utf8', timeout: 15000, stdio: ['ignore', 'pipe', 'ignore'], windowsHide: true, env: cliEnv() });
